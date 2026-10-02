@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"Swipe naar links om een andere wijzerplaat te kiezen"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"Swipe naar rechts om een andere wijzerplaat te kiezen"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"Aangepaste wijzerplaten"</string>
+    <string name="astral_clock_font_title">Lettertype van de klok</string>
+    <string name="astral_clock_font_default">Systeemstandaard</string>
 </resources>

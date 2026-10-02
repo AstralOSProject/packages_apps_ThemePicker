@@ -45,6 +45,27 @@
     <!-- Description of a section of the customization picker where the user can configure clock color and size, e.g. Violet, small. [CHAR LIMIT=NONE] -->
     <string name="clock_color_and_size_description"><xliff:g name="color">%1$s</xliff:g>, <xliff:g name="size">%2$s</xliff:g></string>
 
+    <!-- Title of an entry to choose the lockscreen clock font. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_title">Clock font</string>
+
+    <!-- Clock font option that keeps the system default clock font. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_default">System default</string>
+
+    <!-- Clock font option name. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_sans">Sans-serif</string>
+
+    <!-- Clock font option name. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_serif">Serif</string>
+
+    <!-- Clock font option name. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_cursive">Cursive</string>
+
+    <!-- Clock font option name. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_casual">Casual</string>
+
+    <!-- Clock font option name. [CHAR LIMIT=20] -->
+    <string name="astral_clock_font_roboto_flex">Roboto Flex</string>
+
     <!-- Title of a tab to change the clock style. [CHAR LIMIT=15] -->
     <string name="clock_style">Style</string>
 

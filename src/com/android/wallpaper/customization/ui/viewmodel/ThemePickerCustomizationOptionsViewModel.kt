@@ -103,6 +103,20 @@ constructor(
             }
         }
 
+    val onCustomizeClockFontClicked: Flow<(() -> Unit)?> =
+        selectedOption.map {
+            if (it == null) {
+                {
+                    defaultCustomizationOptionsViewModel.selectOption(
+                        ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
+                            .CLOCK_FONT
+                    )
+                }
+            } else {
+                null
+            }
+        }
+
     val onCustomizeShortcutClicked: Flow<(() -> Unit)?> =
         selectedOption.map {
             if (it == null) {
@@ -188,7 +202,12 @@ constructor(
 
     val isApplyButtonEnabled: Flow<Boolean> = onApplyButtonClicked.map { it != null }
 
-    val isApplyButtonVisible: Flow<Boolean> = selectedOption.map { it != null }
+    val isApplyButtonVisible: Flow<Boolean> =
+        selectedOption.map {
+            it != null &&
+                it !=
+                    ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption.CLOCK_FONT
+        }
 
     val isToolbarCollapsed: Flow<Boolean> =
         combine(selectedOption, clockPickerViewModel.selectedTab) { selectedOption, selectedTab ->

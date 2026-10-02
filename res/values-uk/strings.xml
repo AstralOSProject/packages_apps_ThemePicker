@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"Проведіть ліворуч, щоб вибрати інший циферблат"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"Проведіть праворуч, щоб вибрати інший циферблат"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"Власні циферблати"</string>
+    <string name="astral_clock_font_title">Шрифт годинника</string>
+    <string name="astral_clock_font_default">Системний за замовчуванням</string>
 </resources>

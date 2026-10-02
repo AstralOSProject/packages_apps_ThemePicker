@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"Přejetím doleva vyberete jiný ciferník"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"Přejetím doprava vyberete jiný ciferník"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"Vlastní hodiny"</string>
+    <string name="astral_clock_font_title">Písmo hodin</string>
+    <string name="astral_clock_font_default">Výchozí systémové</string>
 </resources>

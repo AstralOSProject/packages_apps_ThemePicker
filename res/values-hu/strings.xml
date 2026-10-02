@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"Csúsztassa gyorsan balra az ujját másik óralap kiválasztásához"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"Csúsztassa gyorsan jobbra az ujját másik óralap kiválasztásához"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"Egyéni óralapok"</string>
+    <string name="astral_clock_font_title">Óra betűtípusa</string>
+    <string name="astral_clock_font_default">Rendszer alapértelmezés</string>
 </resources>

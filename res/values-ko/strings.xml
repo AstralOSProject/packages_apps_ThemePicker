@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"왼쪽으로 스와이프하여 다른 시계 페이스 선택"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"오른쪽으로 스와이프하여 다른 시계 페이스 선택"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"시계 페이스 맞춤설정"</string>
+    <string name="astral_clock_font_title">시계 글꼴</string>
+    <string name="astral_clock_font_default">시스템 기본값</string>
 </resources>

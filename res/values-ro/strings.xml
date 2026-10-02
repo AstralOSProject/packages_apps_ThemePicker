@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"Glisează spre stânga ca să alegi alt aspect de ceas"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"Glisează spre dreapta ca să alegi alt aspect de ceas"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"Ceasuri personalizate"</string>
+    <string name="astral_clock_font_title">Fontul ceasului</string>
+    <string name="astral_clock_font_default">Implicit din sistem</string>
 </resources>

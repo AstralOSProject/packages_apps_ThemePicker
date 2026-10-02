@@ -152,4 +152,6 @@
     <string name="scroll_forward_and_select" msgid="6156132388656395769">"向左滑動可選擇其他錶面"</string>
     <string name="scroll_backward_and_select" msgid="5472202348434803757">"向右滑動可選擇其他錶面"</string>
     <string name="custom_clocks_label" msgid="8168419717593569347">"自訂錶面"</string>
+    <string name="astral_clock_font_title">時鐘字型</string>
+    <string name="astral_clock_font_default">系統預設</string>
 </resources>

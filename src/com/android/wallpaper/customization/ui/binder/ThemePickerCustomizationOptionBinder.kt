@@ -32,6 +32,7 @@ import com.android.customization.picker.clock.shared.ClockSize
 import com.android.customization.picker.clock.ui.view.ClockConstraintLayoutHostView
 import com.android.customization.picker.clock.ui.view.ClockConstraintLayoutHostView.Companion.addClockViews
 import com.android.customization.picker.clock.ui.view.ClockViewFactory
+import com.android.customization.picker.clock.ui.view.ThemePickerClockViewFactory
 import com.android.customization.picker.grid.ui.binder.GridIconViewBinder
 import com.android.systemui.plugins.clocks.ClockFontAxisSetting
 import com.android.systemui.plugins.clocks.ClockPreviewConfig
@@ -87,6 +88,11 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 ?.second
         val optionClockIcon = optionClock?.findViewById<ImageView>(R.id.option_entry_clock_icon)
 
+        val optionClockFont =
+            lockScreenCustomizationOptionEntries
+                .find { it.first == ThemePickerLockCustomizationOption.CLOCK_FONT }
+                ?.second
+
         val optionShortcut =
             lockScreenCustomizationOptionEntries
                 .find { it.first == ThemePickerLockCustomizationOption.SHORTCUTS }
@@ -125,6 +131,12 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 launch {
                     optionsViewModel.onCustomizeClockClicked.collect {
                         optionClock?.setOnClickListener { _ -> it?.invoke() }
+                    }
+                }
+
+                launch {
+                    optionsViewModel.onCustomizeClockFontClicked.collect {
+                        optionClockFont?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
 
@@ -207,6 +219,10 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             }
 
         customizationOptionFloatingSheetViewMap
+            ?.get(ThemePickerLockCustomizationOption.CLOCK_FONT)
+            ?.let { ClockFontFloatingSheetBinder.bind(it, optionsViewModel) }
+
+        customizationOptionFloatingSheetViewMap
             ?.get(ThemePickerLockCustomizationOption.SHORTCUTS)
             ?.let {
                 ShortcutFloatingSheetBinder.bind(
@@ -256,55 +272,62 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                var lastClockFontVersion = clockPickerViewModel.clockFontVersion.value
+
                 launch {
                     combine(
-                            clockPickerViewModel.previewingClock,
-                            clockPickerViewModel.previewingClockSize,
-                        ) { clock, size ->
-                            clock to size
+                        clockPickerViewModel.previewingClock,
+                        clockPickerViewModel.previewingClockSize,
+                        clockPickerViewModel.clockFontVersion,
+                    ) { clock, size, version ->
+                        Triple(clock, size, version)
+                    }
+                    .collect { (clock, size, version) ->
+                        if (version != lastClockFontVersion) {
+                            lastClockFontVersion = version
+                            (clockViewFactory as? ThemePickerClockViewFactory)
+                                ?.clearClockControllers()
                         }
-                        .collect { (clock, size) ->
-                            clockHostView.removeAllViews()
-                            // For new customization picker, we should get views from clocklayout
-                            if (Flags.newCustomizationPickerUi()) {
-                                clockViewFactory.getController(clock.clockId).let { clockController
-                                    ->
-                                    addClockViews(clockController, clockHostView, size)
-                                    val cs = ConstraintSet()
-                                    // TODO(b/379348167): get correct isShadeLayoutWide from picker
-                                    clockController.largeClock.layout.applyPreviewConstraints(
-                                        ClockPreviewConfig(
-                                            previewContext = context,
-                                            isShadeLayoutWide = false,
-                                            isSceneContainerFlagEnabled = false,
-                                        ),
-                                        cs,
-                                    )
-                                    clockController.smallClock.layout.applyPreviewConstraints(
-                                        ClockPreviewConfig(
-                                            previewContext = context,
-                                            isShadeLayoutWide = false,
-                                            isSceneContainerFlagEnabled = false,
-                                        ),
-                                        cs,
-                                    )
-                                    cs.applyTo(clockHostView)
-                                }
-                            } else {
-                                val clockView =
-                                    when (size) {
-                                        ClockSize.DYNAMIC ->
-                                            clockViewFactory.getLargeView(clock.clockId)
-                                        ClockSize.SMALL ->
-                                            clockViewFactory.getSmallView(clock.clockId)
-                                    }
-                                // The clock view might still be attached to an existing parent.
-                                // Detach
-                                // before adding to another parent.
-                                (clockView.parent as? ViewGroup)?.removeView(clockView)
-                                clockHostView.addView(clockView)
+                        clockHostView.removeAllViews()
+                        // For new customization picker, we should get views from clocklayout
+                        if (Flags.newCustomizationPickerUi()) {
+                            clockViewFactory.getController(clock.clockId).let { clockController ->
+                                addClockViews(clockController, clockHostView, size)
+                                val cs = ConstraintSet()
+                                // TODO(b/379348167): get correct isShadeLayoutWide from picker
+                                clockController.largeClock.layout.applyPreviewConstraints(
+                                    ClockPreviewConfig(
+                                        previewContext = context,
+                                        isShadeLayoutWide = false,
+                                        isSceneContainerFlagEnabled = false,
+                                    ),
+                                    cs,
+                                )
+                                clockController.smallClock.layout.applyPreviewConstraints(
+                                    ClockPreviewConfig(
+                                        previewContext = context,
+                                        isShadeLayoutWide = false,
+                                        isSceneContainerFlagEnabled = false,
+                                    ),
+                                    cs,
+                                )
+                                cs.applyTo(clockHostView)
                             }
+                        } else {
+                            val clockView =
+                                when (size) {
+                                    ClockSize.DYNAMIC ->
+                                        clockViewFactory.getLargeView(clock.clockId)
+                                    ClockSize.SMALL ->
+                                        clockViewFactory.getSmallView(clock.clockId)
+                                }
+                            // The clock view might still be attached to an existing parent.
+                            // Detach
+                            // before adding to another parent.
+                            (clockView.parent as? ViewGroup)?.removeView(clockView)
+                            clockHostView.addView(clockView)
                         }
+                    }
                 }
 
                 launch {

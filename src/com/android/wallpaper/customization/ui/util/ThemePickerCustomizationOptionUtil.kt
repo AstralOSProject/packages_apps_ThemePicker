@@ -42,6 +42,7 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
 
     enum class ThemePickerLockCustomizationOption : CustomizationOptionUtil.CustomizationOption {
         CLOCK,
+        CLOCK_FONT,
         SHORTCUTS,
         SHOW_NOTIFICATIONS,
         MORE_LOCK_SCREEN_SETTINGS,
@@ -68,6 +69,14 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
                         ThemePickerLockCustomizationOption.CLOCK to
                             layoutInflater.inflate(
                                 R.layout.customization_option_entry_clock,
+                                optionContainer,
+                                false,
+                            )
+                    )
+                    add(
+                        ThemePickerLockCustomizationOption.CLOCK_FONT to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_clock_font,
                                 optionContainer,
                                 false,
                             )
@@ -146,6 +155,15 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
                     .also { bottomSheetContainer.addView(it) },
             )
             put(
+                ThemePickerLockCustomizationOption.CLOCK_FONT,
+                inflateFloatingSheet(
+                        ThemePickerLockCustomizationOption.CLOCK_FONT,
+                        bottomSheetContainer,
+                        layoutInflater,
+                    )
+                    .also { bottomSheetContainer.addView(it) },
+            )
+            put(
                 ThemePickerLockCustomizationOption.SHORTCUTS,
                 inflateFloatingSheet(
                         ThemePickerLockCustomizationOption.SHORTCUTS,
@@ -191,6 +209,7 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
     ): View =
         when (option) {
             ThemePickerLockCustomizationOption.CLOCK -> R.layout.floating_sheet_clock
+            ThemePickerLockCustomizationOption.CLOCK_FONT -> R.layout.floating_sheet_clock_font
             ThemePickerLockCustomizationOption.SHORTCUTS -> R.layout.floating_sheet_shortcut
             ThemePickerHomeCustomizationOption.COLORS -> R.layout.floating_sheet_colors
             ThemePickerHomeCustomizationOption.APP_SHAPE_GRID -> R.layout.floating_sheet_shape_grid

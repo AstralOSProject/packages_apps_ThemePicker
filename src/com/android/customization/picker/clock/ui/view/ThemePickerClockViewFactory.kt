@@ -175,6 +175,11 @@ constructor(
         smallClockFrames.clear()
     }
 
+    fun clearClockControllers() {
+        clockControllers.clear()
+        smallClockFrames.clear()
+    }
+
     private fun onTimeTick() {
         clockControllers.values.forEach {
             it.largeClock.events.onTimeTick()

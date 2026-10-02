@@ -110,6 +110,14 @@ constructor(
             )
         }
 
+    // Bumped whenever the clock font family setting changes so previews can be rebuilt
+    private val _clockFontVersion = MutableStateFlow(0)
+    val clockFontVersion: StateFlow<Int> = _clockFontVersion.asStateFlow()
+
+    fun onClockFontFamilySelected() {
+        _clockFontVersion.value = _clockFontVersion.value + 1
+    }
+
     // Clock style
     private val overridingClock = MutableStateFlow<ClockMetadataModel?>(null)
     private val isClockEdited =
